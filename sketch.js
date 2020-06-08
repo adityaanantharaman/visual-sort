@@ -11,15 +11,23 @@ var ss=0;
 var bs=0;
 var curr_sort=0;
 
-function setup() {
-  // put setup code here
-    createCanvas(600,600);
+function setup_init()
+{
     sorts=["SELECTION SORT","BUBBLE SORT"];
     size=50;
     gap=5;
-    bar_width=6;
+    bar_width=width/size-6;
     for(let i=0;i<size;i++)
         arr.push(random(10,height-30));
+    
+    
+}
+
+function setup() {
+  // put setup code here
+    createCanvas(windowWidth-4,windowHeight-4);
+    setup_init();
+    
     
     b1=createButton("RESET");
     b1.position(200,10);
@@ -29,11 +37,18 @@ function setup() {
     s1.position(60,10);
     
     sel=createSelect();
-    sel.position(width-120,10);
+    sel.position(380,10);
     sel.option("selection sort");
     sel.option("bubble sort");
     sel.changed(changeSort);
 }
+
+function windowResized() {
+  resizeCanvas(windowWidth-4, windowHeight-4);
+  setup_init();
+  reset();
+}
+
 function reset()
 {
     ss=0;
@@ -143,7 +158,7 @@ function draw() {
     background(0);
     fill(255);
     text("SPEED",10,25);
-    text(sorts[curr_sort],360,24);
+    text(sorts[curr_sort],260,24);
     frameRate(s1.value());
     switch(curr_sort)
         {
