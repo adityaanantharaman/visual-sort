@@ -150,7 +150,11 @@ function bs_show()
                fill(color('#fcbf1e'));
                stroke(color('#fcbf1e'));
                }
-                
+            else if(i==(size-ii))
+               {
+               fill(color('#d92027'));
+               stroke(color('#d92027'));
+               }
             else
                 {
                     fill(color('#035aa6'));
@@ -162,7 +166,7 @@ function bs_show()
 }
 function bs_step()
 {
-    if(ii<size)
+    if(ii<size+1)
         {
             if(arr[jj+1]<arr[jj])
                 {
@@ -171,12 +175,17 @@ function bs_step()
                     arr[jj]=t;
                 }
             jj++;
-            if(jj==size-ii-1)
+            if(jj==size-ii)
                 {
                     jj=0;
                     ii++;
                 }
             
+        }
+    if(ii==size)
+        {
+            ii++;
+            jj--;
         }
 }
 
