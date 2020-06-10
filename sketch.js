@@ -9,7 +9,13 @@ var jj;
 var smallii;
 var ss=0;
 var bs=0;
+var qs=0;
 var curr_sort=0;
+
+var qs_stack=[];
+var whatqsdo=0;
+var fast,slow;
+var sorted_by_qs=[];
 
 function setup_init(s)
 {
@@ -43,6 +49,7 @@ function setup() {
     sel.position(10,35);
     sel.option("SELECTION SORT");
     sel.option("BUBBLE SORT");
+    sel.option("QUICK SORT");
     sel.changed(changeSort);
 }
 
@@ -59,7 +66,9 @@ function reset()
 {
     ss=0;
     bs=0;
+    qs=0;
     arr=[];
+    sorted_by_qs=[];
     for(let i=0;i<size;i++)
         arr.push(random(20,height-30));
 }
@@ -69,6 +78,8 @@ function changeSort()
         curr_sort=0;
     else if(sel.value()=="BUBBLE SORT")
         curr_sort=1;
+    else if(sel.value()=="QUICK SORT")
+        curr_sort=2;
     reset();
 }
 
@@ -188,6 +199,92 @@ function bs_step()
             jj--;
         }
 }
+function qs_step()
+{
+    if(whatqsdo==0)
+        {
+            if(qs_stack.length>0)
+                {
+                    let p=qs_stack.pop();
+                    ii=p[0];
+                    jj=p[1];
+                    fast=ii;
+                    slow=ii;
+                    whatqsdo=1;
+                }
+            else
+                {
+                    ii=-1;
+                    jj=-1;
+                    fast=-1;
+                    slow=-1;
+                }
+        }
+    if(whatqsdo==1)
+        {
+            if(arr[fast]<arr[ii])
+                {
+                    slow++;
+                    let temp=arr[slow];
+                    arr[slow]=arr[fast];
+                    arr[fast]=temp;
+                }
+            fast++;
+            if(fast==jj+1)
+                {
+                    let temp=arr[ii];
+                    arr[ii]=arr[slow];
+                    arr[slow]=temp;
+                    sorted_by_qs.push(slow);
+                    whatqsdo=0;
+                    if(slow+1<=jj)
+                        qs_stack.push([slow+1,jj]);
+                    if(ii<=slow-1)
+                        qs_stack.push([ii,slow-1]);
+                }
+        }
+}
+function qs_show()
+{
+    stroke(255,0,0);
+    strokeWeight(1);
+    fill(100,50,255);
+    for(let i=0;i<size;i++)
+        {
+            if(sorted_by_qs.includes(i))
+               {
+               fill(color('#fcbf1e'));
+               stroke(color('#fcbf1e'));
+               }
+            else if(i==jj)
+               {
+               fill(color('#d92027'));
+               stroke(color('#d92027'));
+               }
+            else if(i==ii)
+               {
+               fill(color('#d92027'));
+               stroke(color('#d92027'));
+               }
+            else
+                {
+                    fill(color('#035aa6'));
+                    stroke(color('#035aa6'));
+                }
+                
+            rect(15+i*(bar_width+gap),height-arr[i],bar_width,arr[i]);   
+        }
+}
+function qs_init()
+{
+    qs_stack=[];
+    qs_stack.push([0,size-1]);
+    whatqsdo=0;
+    ii=0;
+    jj=0;
+    fast=0;
+    slow=0;
+}
 
 function draw() {
   // put drawing code here
@@ -218,6 +315,17 @@ function draw() {
                         bs_init();
                     }
                 bs_step();
-            }     
+                break;
+            }
+            case(2):
+                {
+                    if(qs==0)
+                        {
+                            qs=1;
+                            qs_init();
+                        }
+                    qs_show();
+                    qs_step();
+                }
         }
 }
