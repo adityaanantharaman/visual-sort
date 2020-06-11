@@ -174,6 +174,7 @@ function bs_show()
                 
             rect(15+i*(bar_width+gap),height-arr[i],bar_width,arr[i]);   
         }
+    
 }
 function bs_step()
 {
@@ -266,6 +267,11 @@ function qs_show()
                fill(color('#d92027'));
                stroke(color('#d92027'));
                }
+            else if(i==fast)
+               {
+               fill(color('#40bad5'));
+               stroke(color('#40bad5'));
+               }
             else
                 {
                     fill(color('#035aa6'));
@@ -274,6 +280,11 @@ function qs_show()
                 
             rect(15+i*(bar_width+gap),height-arr[i],bar_width,arr[i]);   
         }
+    stroke(255);
+    strokeWeight(0.3); 
+    line(0,height-arr[ii],width,height-arr[ii]);
+    if(slow>=0)
+    line(18+slow*(bar_width+gap)+bar_width,0,18+slow*(bar_width+gap)+bar_width,height);
 }
 function qs_init()
 {
