@@ -10,12 +10,15 @@ var smallii;
 var ss=0;
 var bs=0;
 var qs=0;
+var hs=0;
 var curr_sort=0;
 
 var qs_stack=[];
 var whatqsdo=0;
 var fast,slow;
 var sorted_by_qs=[];
+
+var downing,mainheapify,hsmax,whathsdo;
 
 function setup_init(s)
 {
@@ -42,7 +45,7 @@ function setup() {
     b1.position(150,35);
     b1.mouseClicked(reset);
     
-    s1=createSlider(3,60,25,1);
+    s1=createSlider(1,60,25,1);
     s1.position(70,6);
     
     sel=createSelect();
@@ -50,6 +53,7 @@ function setup() {
     sel.option("SELECTION SORT");
     sel.option("BUBBLE SORT");
     sel.option("QUICK SORT");
+    sel.option("HEAP SORT");
     sel.changed(changeSort);
 }
 
@@ -67,6 +71,7 @@ function reset()
     ss=0;
     bs=0;
     qs=0;
+    hs=0;
     arr=[];
     sorted_by_qs=[];
     for(let i=0;i<size;i++)
@@ -80,6 +85,8 @@ function changeSort()
         curr_sort=1;
     else if(sel.value()=="QUICK SORT")
         curr_sort=2;
+    else if(sel.value()=="HEAP SORT")
+        curr_sort=3;
     reset();
 }
 
@@ -297,6 +304,114 @@ function qs_init()
     slow=0;
 }
 
+function hs_show()
+{
+    stroke(255,0,0);
+    strokeWeight(1);
+    fill(100,50,255);
+    for(let i=0;i<size;i++)
+        {
+            fill(color('#035aa6'));
+            stroke(color('#035aa6'));
+            rect(15+i*(bar_width+gap),height-arr[i],bar_width,arr[i]);   
+        }
+    fill(255);
+    text(arr[0],100,100);
+}
+
+function hs_init()
+{
+    downing=0;
+    mainheapify=size;
+    hsmax=size;
+    whathsdo=0;
+}
+function hs_step()
+{
+    if(whathsdo==0)
+        {
+            if(downing==0)
+                {
+                 downing=1;
+                 mainheapify--;
+                 heapify=mainheapify;
+                 hs_down_step(heapify,size);
+                }
+            else
+                {
+                    hs_down_step(heapify,size);
+                }
+        }
+    else if(whathsdo==1)
+        {
+            if(downing==0)
+                {
+                    downing=1;
+                    hsmax--;
+                    let temp=arr[hsmax];
+                    arr[hsmax]=arr[0];
+                    arr[0]=temp;
+                    heapify=0;
+                    hs_down_step(heapify,hsmax);
+                }
+            else
+                {
+                    hs_down_step(heapify,hsmax);
+                }
+        }
+    else
+        {
+            
+        }
+}
+function hs_down_step(h,newsize)
+{
+    let lc=h*2+1;
+    let rc=lc+1;
+    let si=-1;
+    if(rc<newsize)
+        {
+           if(arr[rc]>arr[lc])
+               si=rc;
+            else
+                si=lc;
+        }
+    else if(lc<newsize)
+        {
+            si=lc;
+        }
+    else
+        {
+            downing=0;
+            if(whathsdo==0)
+                if(mainheapify==0)
+                    whathsdo=1;
+            else if(whathsdo==1)
+                if(hsmax==1)
+                    whathsdo=2;
+        }
+    if(si!=-1)
+        {
+            if(arr[si]>arr[h])
+                {
+                    let temp=arr[si];
+                    arr[si]=arr[h];
+                    arr[h]=temp;
+                    heapify=si;
+                }
+            else
+                {
+                    downing=0;
+                    if(whathsdo==0)
+                        if(mainheapify==0)
+                            whathsdo=1;
+                    else if(whathsdo==1)
+                        if(hsmax==1)
+                            whathsdo=2;
+                }
+        }
+}
+
 function draw() {
   // put drawing code here
     background(color('#120136'));
@@ -337,6 +452,18 @@ function draw() {
                         }
                     qs_show();
                     qs_step();
+                    break;
                 }
+            case(3):
+                {
+                    if(hs==0)
+                        {
+                            hs=1;
+                            hs_init();
+                        }
+                    hs_show();
+                    hs_step();
+                }
+                
         }
 }
