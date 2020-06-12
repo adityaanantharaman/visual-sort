@@ -311,12 +311,35 @@ function hs_show()
     fill(100,50,255);
     for(let i=0;i<size;i++)
         {
-            fill(color('#035aa6'));
-            stroke(color('#035aa6'));
+            if(whathsdo==0)
+                {
+                    fill(color('#035aa6'));
+                    stroke(color('#035aa6'));
+                }
+            else
+                {
+                    if(i<hsmax)
+                       {
+                           if(downing==0)
+                               {
+                                   fill(color('#d92027'));
+                                    stroke(color('#d92027'));
+                               }
+                           else
+                               {
+                                   fill(color('#fcbf1e'));
+                                    stroke(color('#fcbf1e'));
+                               }
+                       }
+                    else
+                       {
+                        fill(color('#035aa6'));
+                        stroke(color('#035aa6'));
+                       }
+                }
             rect(15+i*(bar_width+gap),height-arr[i],bar_width,arr[i]);   
         }
     fill(255);
-    text(arr[0],100,100);
 }
 
 function hs_init()
@@ -352,16 +375,12 @@ function hs_step()
                     arr[hsmax]=arr[0];
                     arr[0]=temp;
                     heapify=0;
-                    hs_down_step(heapify,hsmax);
+                    //hs_down_step(heapify,hsmax);
                 }
             else
                 {
                     hs_down_step(heapify,hsmax);
                 }
-        }
-    else
-        {
-            
         }
 }
 function hs_down_step(h,newsize)
@@ -384,11 +403,15 @@ function hs_down_step(h,newsize)
         {
             downing=0;
             if(whathsdo==0)
-                if(mainheapify==0)
-                    whathsdo=1;
-            else if(whathsdo==1)
-                if(hsmax==1)
-                    whathsdo=2;
+                {
+                    if(mainheapify==0)
+                        whathsdo=1;
+                }
+                else if(whathsdo==1)
+                    {
+                        if(hsmax==0)
+                            whathsdo=2;
+                    }
         }
     if(si!=-1)
         {
@@ -406,7 +429,7 @@ function hs_down_step(h,newsize)
                         if(mainheapify==0)
                             whathsdo=1;
                     else if(whathsdo==1)
-                        if(hsmax==1)
+                        if(hsmax==0)
                             whathsdo=2;
                 }
         }
