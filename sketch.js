@@ -117,7 +117,7 @@ function ss_show()
                 stroke(color('#035aa6'));
                 fill(color('#035aa6'));
             }
-            rect(15+i*(bar_width+gap),height-arr[i],bar_width,arr[i]);   
+            rect(15+i*(bar_width+gap),height-arr[i],bar_width,arr[i],10);   
         }
          
 }
@@ -179,7 +179,7 @@ function bs_show()
                     stroke(color('#035aa6'));
                 }
                 
-            rect(15+i*(bar_width+gap),height-arr[i],bar_width,arr[i]);   
+            rect(15+i*(bar_width+gap),height-arr[i],bar_width,arr[i],10);   
         }
     
 }
@@ -285,7 +285,7 @@ function qs_show()
                     stroke(color('#035aa6'));
                 }
                 
-            rect(15+i*(bar_width+gap),height-arr[i],bar_width,arr[i]);   
+            rect(15+i*(bar_width+gap),height-arr[i],bar_width,arr[i],10);   
         }
     stroke(255);
     strokeWeight(0.3); 
@@ -337,7 +337,7 @@ function hs_show()
                         stroke(color('#035aa6'));
                        }
                 }
-            rect(15+i*(bar_width+gap),height-arr[i],bar_width,arr[i]);   
+            rect(15+i*(bar_width+gap),height-arr[i],bar_width,arr[i],10);   
         }
     fill(255);
 }
