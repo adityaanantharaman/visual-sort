@@ -8,5 +8,5 @@ as of now, added:
 2. bubble sort
 3. quick sort
 4. heap sort
-
+5. merge sort
 [link to simulation - VISUAL_SORT](http://adityaanantharaman.github.io/visual-sort)
