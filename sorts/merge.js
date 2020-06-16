@@ -10,7 +10,13 @@ var tomerge=[];
 var whatmsdo,startingmerge,phase2;
 
 /*
-This one was tricky. Mainly because, recursion can not be used as every step during the sort has to be shown on screen. Hence I used 3 stacks TOSORT, SORTED, TOMERGE. Pop the first range ie: 0->len-1 from tosort. push back 2nd half of range followed by 1st half of range. for example, pop 0-9, push 5-9, push 0,4. Lets call this the break step. After each break step, push 0,mid,end into TOMERGE. Initially, this step happens recursively until range contains only 1 element. If range contains only 1 number, push that to sorted array. Now, if the SORTED stack contains 2 or more ranges, and the TOMERGE stack contains these two ranges at the top of the stack, then pop from merge, pop from sorted, and merge the range and replace the merged values in the original array.
+This one was tricky. Mainly because, recursion can not be used as every step during the sort has to be shown on screen. 
+Hence I used 3 stacks TOSORT, SORTED, TOMERGE. Pop the first range ie: 0->len-1 from tosort. 
+push back 2nd half of range followed by 1st half of range. for example, pop 0-9, push 5-9, push 0,4. 
+Lets call this the break step. After each break step, push 0,mid,end into TOMERGE. 
+Initially, this step happens recursively until range contains only 1 element. If range contains only 1 number, push that to sorted array. 
+Now, if the SORTED stack contains 2 or more ranges, and the TOMERGE stack contains these two ranges at the top of the stack,
+then pop from merge, pop from sorted, and merge the range and replace the merged values in the original array.
 */
 
 function ms_init()
