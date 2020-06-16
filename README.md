@@ -1,9 +1,12 @@
 # visual-sort
-visualisation of popular sorting algorithms. Made with processing and javascript.
+Visualisation of popular sorting algorithms. Made with processing and javascript. Works well on desktop as well as mobile. 
+
+To run locally,
+1. clone repo
+2. run index.html
+3. to view and edit the code, open the repo using an ide.
 
 ![](mergedemo.gif)
-
-Work-in-progress!
 
 Current List:
 1. selection sort O(n*n)
